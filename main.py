@@ -2257,6 +2257,27 @@ class LifeLineRequest(BaseModel):
         return v
 
 
+class DivinationRequest(BaseModel):
+    """起卦请求模型"""
+    stage: str = Field(..., description="阶段：greeting（初始接待）、analysis（正式排盘）、dayun（大运推演）")
+    user_input: Optional[str] = Field(None, description="用户输入（生辰信息或'起大运'）")
+    birth_date: Optional[str] = Field(None, description="出生日期 YYYY-MM-DD（阶段2和3需要）")
+    birth_time: Optional[str] = Field(None, description="出生时间 HH:MM（阶段2和3需要）")
+    gender: Optional[str] = Field(None, description="性别（阶段2和3需要）")
+    lat: Optional[float] = Field(None, description="纬度（阶段2和3需要）")
+    lng: Optional[float] = Field(None, description="经度（阶段2和3需要）")
+    city: Optional[str] = Field(None, description="出生地（阶段2和3需要）")
+    name: Optional[str] = Field("有缘人", description="姓名")
+    
+    @field_validator('stage')
+    @classmethod
+    def validate_stage(cls, v):
+        """验证阶段字段"""
+        if v not in ['greeting', 'analysis', 'dayun']:
+            raise ValueError('阶段必须是 greeting、analysis 或 dayun')
+        return v
+
+
 @app.post("/api/divination/life-line")
 async def generate_life_line(request: LifeLineRequest):
     """
