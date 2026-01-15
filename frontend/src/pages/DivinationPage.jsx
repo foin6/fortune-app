@@ -1,11 +1,22 @@
 import { DivinationProvider, useDivination } from '../contexts/DivinationContext';
 import ChatInterface from '../components/ChatInterface';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 /**
  * 起卦页面 - 仅显示AI命理师聊天室
  */
 function DivinationContent() {
   const { formData, calculation } = useDivination();
+  const location = useLocation();
+  
+  // 确保在起卦页面时不会自动跳转
+  useEffect(() => {
+    // 如果当前不在起卦页面，记录警告
+    if (location.pathname !== '/divination') {
+      console.warn('⚠️ 检测到路由变化，当前路径:', location.pathname);
+    }
+  }, [location]);
 
   // 初始欢迎消息（根据后端 System Prompt 阶段1）
   const welcomeMessage = `# AI算命·命理先知

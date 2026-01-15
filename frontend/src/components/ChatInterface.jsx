@@ -337,6 +337,26 @@ export default function ChatInterface({ isOpen, onClose, initialMessage, embedde
                         em: ({node, ...props}) => <em className={`italic ${message.role === 'user' ? 'text-white/90' : 'text-amber-500'}`} {...props} />,
                         blockquote: ({node, ...props}) => <blockquote className={`border-l-4 pl-3 italic my-2 ${message.role === 'user' ? 'border-white/50 text-white/90' : 'border-amber-400 text-amber-700'}`} {...props} />,
                         code: ({node, ...props}) => <code className={`px-1.5 py-0.5 rounded text-sm ${message.role === 'user' ? 'bg-white/20 text-white' : 'bg-gray-100 text-amber-700'}`} {...props} />,
+                        // 防止链接自动跳转，确保起卦界面不会因为 markdown 链接而跳转
+                        a: ({node, ...props}) => {
+                          // 如果是外部链接或内部路由链接，阻止跳转
+                          const href = props.href || '';
+                          const isInternalRoute = href.startsWith('/') || href.startsWith('#');
+                          
+                          return (
+                            <span 
+                              className="text-blue-600 underline"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                console.log('⚠️ 链接被点击，但已阻止跳转（起卦界面不允许跳转）:', href);
+                              }}
+                              title={href}
+                            >
+                              {props.children}
+                            </span>
+                          );
+                        },
                       }}
                     >
                       {message.content}
