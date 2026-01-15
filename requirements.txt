@@ -3,13 +3,13 @@ fastapi==0.104.1
 uvicorn[standard]==0.24.0
 
 # 数据验证
-pydantic==2.5.0
+pydantic==2.12.5
 
 # 八字计算（lunar-java 的 Python 版本）
 lunar-python==1.3.0
 
 # HTTP 客户端（用于调用 DeepSeek API）
-httpx==0.25.2
+httpx==0.28.1
 
 # 环境变量管理
 python-dotenv==1.0.0
