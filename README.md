@@ -31,9 +31,9 @@ pip install -r requirements.txt
 ```
 
 2. **配置环境变量**
-编辑 `.env` 文件，填入你的 DeepSeek API Key：
+编辑 `.env` 文件，填入你的 API Key：
 ```
-DEEPSEEK_API_KEY=your_actual_api_key_here
+xxx_API_KEY=your_actual_api_key_here
 ```
 
 3. **运行服务**
